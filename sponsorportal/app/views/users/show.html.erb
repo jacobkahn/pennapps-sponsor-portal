@@ -1,0 +1,37 @@
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-sm-2 sidebar affix">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Task List</a></li>
+            <li><a class="sidebar-option task-list" href="#">Enter/update contact information</a></li>
+            <li><a class="sidebar-option update-contacts" href="#">Upload Logo</a></li>
+            <li><a class="sidebar-option see-receivables" href="#">See Sponsorship Receivables</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a class="sidebar-option view-invoice" href="#">View Invoice/W-9 Forms</a></li>
+            <li><a class="sidebar-option payment-status" href="#">Check Payment Status</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a class="sidebar-option swag" href="#">Ship Swag</a></li>
+            <li><a class="sidebar-option event-info" href="#">View Event Info</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          <h3>Hi <%= @user.name %>: here's your task list.</h3>
+
+          <ul class="list-group checked-list-box">
+            <li class="list-group-item" data-checked="true">Authorize Account</li>
+            <li class="list-group-item" data-checked="<%= @user.logo_uploaded %>">Upload Logo</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+    </div>
