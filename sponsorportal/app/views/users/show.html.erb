@@ -201,14 +201,14 @@
               <strong>Your invoice isn't ready yet.</strong> We're working on it!
             </div>
             <% else %>
-            <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px" href="<%= @user.invoice_link %>">Download Invoice</a>
+            <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px" href="<%= @user.invoice_link %>" target="_blank">Download Invoice</a>
             <% end %>
             <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:4px" href="https://drive.google.com/file/d/0Bz-V05dIGNG1NHVrVEljZXYwblk/view?usp=sharing" target="_blank">Download W-9</a>
           </div>
 
           <div id="#paymentstatus" class="dashboard-component payment">
             <h3>Payment Status</h3>
-            <% if !@user.payment_received %>
+            <% if @user.payment_received? %>
             <div class="alert alert-success" role="alert">
               <strong>We've received your payment!</strong> If you've any questions, please reach out to <a href="mailto:sponsor@pennapps.com">sponsor@pennapps.com</a>.
             </div>
@@ -263,6 +263,7 @@
             </div>
             <div class="panel-body">
               <i>All times are EST.</i>
+              <br>
               <b>Hacking Starts:</b><p> January 22, 8:00 pm</p>
               <b>Hacking Ends:</b><p> January 24, 9:00 am</p>
             </div>

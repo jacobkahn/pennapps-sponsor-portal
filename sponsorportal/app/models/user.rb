@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   
   attr_accessor :remember_token, :activation_token, :reset_token
-  attr_accessor :payment_received
   before_save   :downcase_email
   before_create :create_activation_digest
 

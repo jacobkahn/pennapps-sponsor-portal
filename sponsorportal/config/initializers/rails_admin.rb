@@ -50,7 +50,24 @@ RailsAdmin.config do |config|
       field :updated_at do
         strftime_format "%Y-%m-%d"
       end
+      # configure :activated do
+      #   hide
+      # end
+      # configure :activated_at do
+      #   hide
+      # end
+      # configure :remember_digest do
+      #   hide
+      # end
+      # configure :password_digest do
+      #   hide
+      # end
+      # configure :activation_digest do
+      #   hide
+      # end
     end
+    exclude_fields :activated, :activated_at, :remember_digest, :password_digest
+    exclude_fields :activation_digest, :reset_digest, :reset_sent_at
   end
 
   def custom_label_method
