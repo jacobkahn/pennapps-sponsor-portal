@@ -12,12 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
-
-var sponsorportal = function () {
-	return this;
-};
-
-var app = new sponsorportal();

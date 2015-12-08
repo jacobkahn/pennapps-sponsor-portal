@@ -36,10 +36,10 @@ gem 'faker', '1.4.2'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'twitter-bootstrap-rails'
-
 gem 'rails_admin'
 gem 'rails_admin_toggleable'
+
+gem 'high_voltage', '~> 2.1.0'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
