@@ -38,8 +38,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rails_admin'
 gem 'rails_admin_toggleable'
+gem "twitter-bootstrap-rails"
 
-gem 'high_voltage', '~> 2.1.0'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
