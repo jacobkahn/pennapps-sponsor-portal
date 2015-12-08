@@ -5,5 +5,4 @@ class ApplicationController < ActionController::Base
 
   # Includes all methods for login/logout/sessions
   include SessionsHelper
-
 end
