@@ -1,5 +1,31 @@
-$(function () {
-	
+$(document).ready(function () {
+    function displayByClassname(className) {
+        console.log(className);
+        $('.dashboard-component').filter('.' + className).css('display', 'block');
+    }
+
+	function resetDashboard() {
+        $('.dashboard-component').css('display', "none");
+    }
+    
+    // On load
+    resetDashboard();
+
+    // Display the task list
+    $('#tasklist').css('display', 'block');
+    
+    // Handle event
+    $('.sidebar-option').on('click', function (e) {
+        console.log($(e.target).attr('class'));
+        resetDashboard();
+        $('#tasklist').css('display', 'none');
+        displayByClassname($(e.target).attr('class').split(' ')[1]);
+
+        // Make new active sidebar option
+        $('.sidebar-option').filter('active').removeClass('active');
+        $(e.target).addClass('active');
+    });
+
 });
 
 

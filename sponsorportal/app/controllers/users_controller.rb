@@ -12,7 +12,9 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @user = User.find(params[:id])
+    unless current_user == User.find(params[:id])
+      redirect_to current_user
+    end
   end
 
   # GET /users/new
@@ -32,10 +34,6 @@ class UsersController < ApplicationController
       UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
-
-      # log_in @user
-      # flash.now[:success] = 'Welcome to the PennApps Sponsor Portal.'
-      # redirect_to @user, notice: 'User was successfully created.'
     else
       render :new
     end
@@ -45,7 +43,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      # Handle
+      flash[:info] = "Your information has been updated."
+      redirect_to @user
     else
       render 'edit'
     end
@@ -67,7 +66,10 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation,
+                                   :primary_contact_name,
+                                   :primary_contact_email,
+                                   :logo)
     end
 
     def logged_in_user

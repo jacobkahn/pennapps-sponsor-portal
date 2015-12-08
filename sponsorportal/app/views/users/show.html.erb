@@ -2,50 +2,71 @@
       <div class="row">
         <div class="col-sm-3 col-sm-2 sidebar affix">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Task List</a></li>
-            <li><a class="sidebar-option task-list" href="#">Enter/update contact information</a></li>
-            <li><a class="sidebar-option update-contacts" href="#">Upload Logo</a></li>
-            <li><a class="sidebar-option see-receivables" href="#">See Sponsorship Receivables</a></li>
+            <li><a class="sidebar-option task-list active" href="#">Task List</a></li>
+            <li><a class="sidebar-option contact" href="#">Enter/update contact information</a></li>
+            <li><a class="sidebar-option logo" href="#">Upload Logo</a></li>
+            <li><a class="sidebar-option receivables" href="#">See Sponsorship Receivables</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a class="sidebar-option view-invoice" href="#">View Invoice/W-9 Forms</a></li>
-            <li><a class="sidebar-option payment-status" href="#">Check Payment Status</a></li>
+            <li><a class="sidebar-option invoice" href="#">View Invoice/W-9 Forms</a></li>
+            <li><a class="sidebar-option payment" href="#">Check Payment Status</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a class="sidebar-option swag" href="#">Ship Swag</a></li>
-            <li><a class="sidebar-option event-info" href="#">View Event Info</a></li>
+            <li><a class="sidebar-option event" href="#">View Event Info</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <%= render partial: "shared/flash_messages", flash: flash %>
+
           <h1 class="page-header">Dashboard</h1>
 
 
-          <div id="#tasklist" style="display: none">
-            <h3>Hi <%= @user.name %>: here's your task list.</h3>
+          <div id="tasklist" class="dashboard-component task-list">
+            <h3>Hi <%= @user.name %>! Here's your list of available tasks.</h3>
 
             <ul class="list-group checked-list-box">
               <li class="list-group-item" data-checked="true">Authorize Account</li>
               <li class="list-group-item" data-checked="<%= @user.logo_valid %>">Upload Valid Logo</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item" data-checked="<%= @user.primary_contact_name != nil && @user.primary_contact_email != nil %>">Update Contact Information</li>
             </ul>
           </div>
 
-          <div id="#contactinformation" style="display: none">
-            <h3>Please make sure the information below is up to date.</h3>
+          <div id="#contactinformation" class="dashboard-component contact">
+            <h3>Update Primary Contact Information</h3>
+            <h4>Please make sure the information below is up to date, so we can contact you if necessary during PennApps.</h4>
+            <b>This contact does not have to be the portal account holder.</b>
+            <p>Modifying these fields doesn't change login credentials for the portal.</p>
+            <%= bootstrap_form_for @user, url: user_path(@user) do |f| %>
+            <%= f.text_field :primary_contact_name, name: 'user[primary_contact_name]' %>
+            <%= f.email_field :primary_contact_email, name: 'user[primary_contact_email]' %>
+
+            <%= f.submit "Update" %>
+            <% end %>
           </div>
 
-          <div id="#logo" style="display: none">
+          <div id="#logo" class="dashboard-component logo">
+            <h3>Current Logo:</h3>
+            <%= image_tag @user.logo.url, class: "company-logo" %>
+            <% if @user.logo_valid %>
+            <div class="alert alert-success" role="alert">
+              <strong>Your logo is valid!</strong> If you've any questions, please reach out to <a href="mailto:sponsor@pennapps.com">sponsor@pennapps.com</a>.
+            </div>
+            <% else %>
+            <div class="alert alert-danger" role="alert">
+              <strong>We're determined something's not quite right with your logo.</strong> If you've uploaded your logo, make sure it's in a vectorized format!
+            </div>
+            <% end %>
 
+            <%= bootstrap_form_for @user, url: user_path(@user) do |f| %>
+            <%= f.file_field :logo, as: :file %>
+            <%= f.submit "Upload Logo" %>
+            <% end %>
           </div>
 
-          <div id="#sponsorshipreceivables" style="display: none">
+          <div id="#sponsorshipreceivables" class="dashboard-component receivables" style="display: none">
+            <h3>Sponsorship Receivables</h3>
+            <h4>What's in your sponsorship package?</h4>
             <% if @user.tier == "Kilo" %>
             <% elsif @user.tier == "Mega" %>
             <% elsif @user.tier == "Giga" %>
@@ -55,7 +76,7 @@
             <% end %>
           </div>
 
-          <div id="#invoice" style="display: none">
+          <div id="#invoice" class="dashboard-component invoice" style="display: none">
             <h3>Invoice and W-9</h3>
             <% if @user.invoice_link == nil %>
             <div class="alert alert-danger" role="alert">
@@ -64,10 +85,10 @@
             <% else %>
             <button type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px"><a href="<%= @user.invoice_link %>">Download Invoice</a></button>
             <% end %>
-            <button type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:4px"><a href="https://drive.google.com/file/d/0Bz-V05dIGNG1NHVrVEljZXYwblk/view?usp=sharing">Download W-9</a></button>
+            <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:4px" href="https://drive.google.com/file/d/0Bz-V05dIGNG1NHVrVEljZXYwblk/view?usp=sharing" target="_blank">Download W-9</a>
           </div>
 
-          <div id="#paymentstatus" >
+          <div id="#paymentstatus" class="dashboard-component payment">
             <h3>Payment Status</h3>
             <% if !@user.payment_received %>
             <div class="alert alert-success" role="alert">
@@ -83,7 +104,7 @@
             <% end %>
           </div>
           
-          <div id="#swag" style="display: none">
+          <div id="#swag" class="dashboard-component swag" style="display: none">
             <h3>Shipping Swag</h3>
             <div class="col-sm-5">
               <div class="panel panel-primary">
@@ -101,8 +122,7 @@
            </div>
          </div>
 
-         <!-- <div id="#eventinfo" style="display: none"> -->
-         <div id="#eventinfo">
+         <div id="#eventinfo" class="dashboard-component event">
           <h3>Event Information</h3>
           <br>
           <div class="col-sm-4">
@@ -137,13 +157,14 @@
             </div>
             <div class="panel-body">
               <b><a href="//pennapps.com">PennApps Website</a></b>
+              <br>
               <b><a href="//pennapps-xiii.devpost.com/">PennApps DevPost</a></b>
             </div>
           </div>
         </div>
-
         <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="400px" src="https://maps.google.com/maps?hl=en&q=Penn Engineering&ie=UTF8&t=roadmap&z=13&iwloc=B&output=embed"></iframe>
       </div>
     </div>
   </div>
+</div>
 </div>

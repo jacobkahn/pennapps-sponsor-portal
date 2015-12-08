@@ -1,29 +1,26 @@
 <% provide(:title, "Edit user") %>
-<h1>Update your profile</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+<div class="container">
+  <h1 class="page-header">Update Your Profile Settings</h1>
 
-      <%= f.label :name %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= bootstrap_form_for(@user) do |f| %>
+      <%= render partial: "shared/flash_messages", flash: flash %>
+      
       <%= f.text_field :name, class: 'form-control' %>
 
-      <%= f.label :email %>
+      <h4>Change Email Address</h4>
       <%= f.email_field :email, class: 'form-control' %>
 
-      <%= f.label :password %>
+      <h4>Change Password</h4>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <%= f.submit "Save changes", class: "btn btn-primary" %>
-    <% end %>
+      <% end %>
 
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank">change</a>
     </div>
   </div>
 </div>

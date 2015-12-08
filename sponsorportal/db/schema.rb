@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208050203) do
+ActiveRecord::Schema.define(version: 20151208053807) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.string   "remember_digest"
     t.string   "password_digest"
     t.string   "activation_digest"
@@ -25,14 +25,16 @@ ActiveRecord::Schema.define(version: 20151208050203) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "logo_valid",                   default: false
-    t.string   "tier",              limit: 20
+    t.boolean  "logo_valid",                       default: false
+    t.string   "tier",                  limit: 20
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.boolean  "payment_received",             default: false
+    t.boolean  "payment_received",                 default: false
     t.string   "invoice_link"
+    t.string   "primary_contact_name"
+    t.string   "primary_contact_email"
   end
 
 end

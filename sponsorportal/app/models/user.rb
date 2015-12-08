@@ -18,12 +18,17 @@ class User < ActiveRecord::Base
   TIER_OPTIONS = ['Title', 'Tera', 'Giga', 'Mega', 'Kilo', 'Custom']
   validates :tier, inclusion: { in: TIER_OPTIONS }
 
-  has_attached_file :logo, default_url: "/images/:style/missing.png"
-  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+  PLACEHOLDER_IMAGE = 'data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+  has_attached_file :logo, default_url: PLACEHOLDER_IMAGE
+  do_not_validate_attachment_file_type :logo
+  # validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
   validate :logo_valid
 
   validate :payment_received
   validate :invoice_link
+
+  validate :primary_contact_name
+  validate :primary_contact_email
 
   def tier_enum
    [['Kilo'], ['Mega'], ['Giga'], ['Tera'], ['Title'], ['Custom']]

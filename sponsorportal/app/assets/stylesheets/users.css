@@ -109,4 +109,15 @@
     background-color: rgb(66, 139, 202);
 }
 
-/* DEMO ONLY - REMOVES UNWANTED MARGIN */
+
+/*
+ * Logo Styling
+ */
+.company-logo {
+    height: 131px; 
+    width: 221px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    
+}
+
