@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   
-  attr_accessor :remember_token, :activation_token, :reset_token, :logo_valid
+  attr_accessor :remember_token, :activation_token, :reset_token
   attr_accessor :payment_received
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
   has_attached_file :logo, default_url: PLACEHOLDER_IMAGE
   do_not_validate_attachment_file_type :logo
   # validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
-  validate :logo_valid
 
   validate :payment_received
   validate :invoice_link
@@ -99,6 +98,10 @@ class User < ActiveRecord::Base
 
     def downcase_email
       self.email = email.downcase
+    end
+
+    def default_logo_valid
+      self.logo_valid = false
     end
 
     def create_activation_digest

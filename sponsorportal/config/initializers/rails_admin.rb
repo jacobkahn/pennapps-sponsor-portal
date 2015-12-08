@@ -22,6 +22,7 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
+    toggle
     new
     export
     bulk_delete
@@ -41,6 +42,8 @@ RailsAdmin.config do |config|
     end
     list do
       field :name
+      field :logo_valid, :toggle
+      field :payment_received, :toggle
       field :created_at do
         date_format :short
       end

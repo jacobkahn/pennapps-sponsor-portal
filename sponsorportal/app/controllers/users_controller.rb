@@ -3,8 +3,6 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]
   before_action :correct_user,   only: [:edit, :update]
 
-
-
   # GET /users
   def index
     @users = User.all
@@ -30,6 +28,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.password = params[:password]
+    @user.logo_valid = false
     if @user.save
       UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Please check your email to activate your account."

@@ -28,7 +28,7 @@
             <ul class="list-group checked-list-box">
               <li class="list-group-item" data-checked="true">Authorize Account</li>
               <li class="list-group-item" data-checked="<%= @user.logo_valid %>">Upload Valid Logo</li>
-              <li class="list-group-item" data-checked="<%= @user.primary_contact_name != nil && @user.primary_contact_email != nil %>">Update Contact Information</li>
+              <li class="list-group-item" data-checked="<%= @user.primary_contact_name != nil && @user.primary_contact_email != nil && @user.primary_contact_name != '' && @user.primary_contact_email != '' %>">Update Contact Information</li>
             </ul>
           </div>
 
@@ -48,13 +48,13 @@
           <div id="#logo" class="dashboard-component logo">
             <h3>Current Logo:</h3>
             <%= image_tag @user.logo.url, class: "company-logo" %>
-            <% if @user.logo_valid %>
+            <% if @user.logo_valid? %>
             <div class="alert alert-success" role="alert">
               <strong>Your logo is valid!</strong> If you've any questions, please reach out to <a href="mailto:sponsor@pennapps.com">sponsor@pennapps.com</a>.
             </div>
             <% else %>
             <div class="alert alert-danger" role="alert">
-              <strong>We're determined something's not quite right with your logo.</strong> If you've uploaded your logo, make sure it's in a vectorized format!
+              <strong>We're determined something's not quite right with your logo.</strong> If you've uploaded your logo, make sure it's in a vectorized format! If you have any questions, contact us.
             </div>
             <% end %>
 
@@ -66,14 +66,132 @@
 
           <div id="#sponsorshipreceivables" class="dashboard-component receivables" style="display: none">
             <h3>Sponsorship Receivables</h3>
-            <h4>What's in your sponsorship package?</h4>
-            <% if @user.tier == "Kilo" %>
-            <% elsif @user.tier == "Mega" %>
-            <% elsif @user.tier == "Giga" %>
-            <% elsif @user.tier == "Tera" %>
-            <% elsif @user.tier == "Title" %>
-            <% elsif @user.tier == "Custom" %>
-            <% end %>
+            <h4>What's in your sponsorship package? You're a <b><%= @user.tier %></b> sponsor!</h4>
+            <div class="list-group" id="sponsorshiptierinformation">
+              <% tiers = ["Kilo", "Mega", "Giga", "Tera", "Title", "Custom"] %>
+              <% tier_number = tiers.index(@user.tier) %>
+              <% if tier_number > 3 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">PennApps Co-Hosted by You</h4>
+                <p class="list-group-item-text">You're our title sponsor!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Keynote Speaker</h4>
+                <p class="list-group-item-text">Address at opening ceremonies.</p>
+              </a>
+              <% end %>
+
+              <% if tier_number > 2 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Two Minute Product or API Demo</h4>
+                <p class="list-group-item-text">During opening ceremonies.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Customized Lounge</h4>
+                <p class="list-group-item-text">Set it up as you see fit.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Present Your Prize On Stage</h4>
+                <p class="list-group-item-text">During Closing ceremonies.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Branded Meal</h4>
+                <p class="list-group-item-text">Sponsored by you.</p>
+              </a>
+              <% end %>
+
+              <% if tier_number > 1 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Sponsored Side Event</h4>
+                <p class="list-group-item-text">This can be anything!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Blurb in PennApps Program</h4>
+                <p class="list-group-item-text">Please send us your blurb if you haven't already.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Send Recruiters</h4>
+                <p class="list-group-item-text">Station them at your table.</p>
+              </a>
+              <% end %>
+
+              <% if tier_number > 0 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Sponsor Table</h4>
+                <p class="list-group-item-text">Your station during the event.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Logo on PennApps T-Shirt</h4>
+                <p class="list-group-item-text">Make sure your logo's correct if you haven't already!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Receive Hacker Resumes</h4>
+                <p class="list-group-item-text">We'll send these to you before the event.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Swag Distribution</h4>
+                <p class="list-group-item-text">You can distribute it at your table, or in our swag bags!</p>
+              </a>
+              <% end %>
+
+              <% if tier_number == 3 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Receive Hacker Resumes</h4>
+                <p class="list-group-item-text">We'll send these to you after the event.</p>
+              </a>
+              <% end %>
+
+              <% if tier_number >= 0 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Bring Hardware</h4>
+                <p class="list-group-item-text"><b>Only</b> if you're signed up to be a hardware sponsor!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Send Mentors</h4>
+                <p class="list-group-item-text">Make sure you've filled out the mentorship form!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Distribute Recruiting Materials</h4>
+                <p class="list-group-item-text">Swag is highly recommended.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Logo on PennApps Website</h4>
+                <p class="list-group-item-text">Again, make sure we have your logo!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Award Branded Prize</h4>
+                <p class="list-group-item-text">Let us know what it is so we can post it and get others excited!</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Your API in the API Directory</h4>
+                <p class="list-group-item-text">Let us know where we can direct hackers for documentation!</p>
+              </a>
+              <% end %>
+
+              <% if tier_number == 0 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">One Minute Product or API Demo</h4>
+                <p class="list-group-item-text">During opening ceremonies.</p>
+              </a>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Swag Distribution</h4>
+                <p class="list-group-item-text">Distributed in swag bags.</p>
+              </a>
+              <% end %>
+
+              <% if tier_number == 5 %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">You have a custom package.</h4>
+                <p class="list-group-item-text">Ask and we'll let you knwo what sponsorship benefits you have!</p>
+              </a>
+              <% end %>
+
+              <% unless tier_number.between?(0, 5) %>
+              <div class="alert alert-danger" role="alert">
+                <strong>We can't find your sponsorship receivables.</strong> Contact us for help.
+              </div>
+              <% end %>
+            </div>
           </div>
 
           <div id="#invoice" class="dashboard-component invoice" style="display: none">
@@ -83,7 +201,7 @@
               <strong>Your invoice isn't ready yet.</strong> We're working on it!
             </div>
             <% else %>
-            <button type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px"><a href="<%= @user.invoice_link %>">Download Invoice</a></button>
+            <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px" href="<%= @user.invoice_link %>">Download Invoice</a>
             <% end %>
             <a type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:4px" href="https://drive.google.com/file/d/0Bz-V05dIGNG1NHVrVEljZXYwblk/view?usp=sharing" target="_blank">Download W-9</a>
           </div>
@@ -103,7 +221,7 @@
             </div>
             <% end %>
           </div>
-          
+
           <div id="#swag" class="dashboard-component swag" style="display: none">
             <h3>Shipping Swag</h3>
             <div class="col-sm-5">

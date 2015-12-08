@@ -1,6 +1,5 @@
-$(document).ready(function () {
+$(function () {
     function displayByClassname(className) {
-        console.log(className);
         $('.dashboard-component').filter('.' + className).css('display', 'block');
     }
 
@@ -16,7 +15,6 @@ $(document).ready(function () {
     
     // Handle event
     $('.sidebar-option').on('click', function (e) {
-        console.log($(e.target).attr('class'));
         resetDashboard();
         $('#tasklist').css('display', 'none');
         displayByClassname($(e.target).attr('class').split(' ')[1]);
