@@ -18,20 +18,132 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
-          <h3>Hi <%= @user.name %>: here's your task list.</h3>
 
-          <ul class="list-group checked-list-box">
-            <li class="list-group-item" data-checked="true">Authorize Account</li>
-            <li class="list-group-item" data-checked="<%= @user.logo_uploaded %>">Upload Logo</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
+
+          <div id="#tasklist" style="display: none">
+            <h3>Hi <%= @user.name %>: here's your task list.</h3>
+
+            <ul class="list-group checked-list-box">
+              <li class="list-group-item" data-checked="true">Authorize Account</li>
+              <li class="list-group-item" data-checked="<%= @user.logo_valid %>">Upload Valid Logo</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+          </div>
+
+          <div id="#contactinformation" style="display: none">
+            <h3>Please make sure the information below is up to date.</h3>
+          </div>
+
+          <div id="#logo" style="display: none">
+
+          </div>
+
+          <div id="#sponsorshipreceivables" style="display: none">
+            <% if @user.tier == "Kilo" %>
+            <% elsif @user.tier == "Mega" %>
+            <% elsif @user.tier == "Giga" %>
+            <% elsif @user.tier == "Tera" %>
+            <% elsif @user.tier == "Title" %>
+            <% elsif @user.tier == "Custom" %>
+            <% end %>
+          </div>
+
+          <div id="#invoice" style="display: none">
+            <h3>Invoice and W-9</h3>
+            <% if @user.invoice_link == nil %>
+            <div class="alert alert-danger" role="alert">
+              <strong>Your invoice isn't ready yet.</strong> We're working on it!
+            </div>
+            <% else %>
+            <button type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:10px"><a href="<%= @user.invoice_link %>">Download Invoice</a></button>
+            <% end %>
+            <button type="button" class="col-sm-9 btn btn-lg btn-success" style="margin-bottom:4px"><a href="https://drive.google.com/file/d/0Bz-V05dIGNG1NHVrVEljZXYwblk/view?usp=sharing">Download W-9</a></button>
+          </div>
+
+          <div id="#paymentstatus" >
+            <h3>Payment Status</h3>
+            <% if !@user.payment_received %>
+            <div class="alert alert-success" role="alert">
+              <strong>We've received your payment!</strong> If you've any questions, please reach out to <a href="mailto:sponsor@pennapps.com">sponsor@pennapps.com</a>.
+            </div>
+            <% else %>
+            <div class="alert alert-danger" role="alert">
+              <strong>Not Received.</strong> We haven't yet received your payment.
+            </div>
+            <div class="well">
+              <p>If you paid by credit card, you will be charged within 3 business days. Checks are processed as they are received, and delivery times vary. If you paid by wire but have not received a confirmation, feel free to reach out to <a href="mailto:sponsor@pennapps.com">sponsor@pennapps.com</a></p>
+            </div>
+            <% end %>
+          </div>
+          
+          <div id="#swag" style="display: none">
+            <h3>Shipping Swag</h3>
+            <div class="col-sm-5">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Swag <b>must</b> be shipped to:</h3>
+                </div>
+                <div class="panel-body">
+                 <p>PennApps c/o Kilian Feeney</p>
+                 <p>Penn Engineering</p>
+                 <p>3330 Walnut Street</p>
+                 <p>Philadelphia, PA 19104</p>
+                 <p>1-215-898-5598</p>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <!-- <div id="#eventinfo" style="display: none"> -->
+         <div id="#eventinfo">
+          <h3>Event Information</h3>
+          <br>
+          <div class="col-sm-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Address</h3>
+              </div>
+              <div class="panel-body">
+               <p>Penn Engineering</p>
+               <p>Towne Building</p>
+               <p>220 S 33rd St</p>
+               <p>Philadelphia, PA 19104</p>
+             </div>
+           </div>
+         </div>
+         <div class="col-sm-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Dates and Times</h3>
+            </div>
+            <div class="panel-body">
+              <i>All times are EST.</i>
+              <b>Hacking Starts:</b><p> January 22, 8:00 pm</p>
+              <b>Hacking Ends:</b><p> January 24, 9:00 am</p>
+            </div>
+          </div>
         </div>
+        <div class="col-sm-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Resources</h3>
+            </div>
+            <div class="panel-body">
+              <b><a href="//pennapps.com">PennApps Website</a></b>
+              <b><a href="//pennapps-xiii.devpost.com/">PennApps DevPost</a></b>
+            </div>
+          </div>
+        </div>
+
+        <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="400px" src="https://maps.google.com/maps?hl=en&q=Penn Engineering&ie=UTF8&t=roadmap&z=13&iwloc=B&output=embed"></iframe>
       </div>
     </div>
+  </div>
+</div>

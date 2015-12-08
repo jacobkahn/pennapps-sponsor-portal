@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207232415) do
+ActiveRecord::Schema.define(version: 20151208050203) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20151207232415) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.boolean  "payment_received",             default: false
+    t.string   "invoice_link"
   end
 
 end

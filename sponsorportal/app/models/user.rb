@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :activation_token, :reset_token, :logo_valid
+  attr_accessor :payment_received
   before_save   :downcase_email
   before_create :create_activation_digest
 
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
 
   # Non-user-infrastructure-related fields: sponsor data
   TIER_OPTIONS = ['Title', 'Tera', 'Giga', 'Mega', 'Kilo', 'Custom']
@@ -19,7 +20,14 @@ class User < ActiveRecord::Base
 
   has_attached_file :logo, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
-  validates :logo_valid, inclusion: [true, false]  
+  validate :logo_valid
+
+  validate :payment_received
+  validate :invoice_link
+
+  def tier_enum
+   [['Kilo'], ['Mega'], ['Giga'], ['Tera'], ['Title'], ['Custom']]
+  end
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
