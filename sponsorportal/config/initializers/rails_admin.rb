@@ -37,11 +37,18 @@ RailsAdmin.config do |config|
   end
 
   config.model 'User' do 
+    configure :set_password do
+      required true
+    end
+
     object_label_method do
       :custom_label_method
     end
     list do
       field :name
+      field :set_password do
+        required true
+      end
       field :logo_valid, :toggle
       field :payment_received, :toggle
       field :created_at do
@@ -50,21 +57,7 @@ RailsAdmin.config do |config|
       field :updated_at do
         strftime_format "%Y-%m-%d"
       end
-      # configure :activated do
-      #   hide
-      # end
-      # configure :activated_at do
-      #   hide
-      # end
-      # configure :remember_digest do
-      #   hide
-      # end
-      # configure :password_digest do
-      #   hide
-      # end
-      # configure :activation_digest do
-      #   hide
-      # end
+
     end
     exclude_fields :activated, :activated_at, :remember_digest, :password_digest
     exclude_fields :activation_digest, :reset_digest, :reset_sent_at

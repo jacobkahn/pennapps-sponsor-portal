@@ -75,6 +75,15 @@ class User < ActiveRecord::Base
     reset_sent_at < 2.hours.ago
   end
 
+  # Provided for Rails Admin to allow the password to be reset
+  def set_password; nil; end
+
+  def set_password=(value)
+    return nil if value.blank?
+    self.password = value
+    self.password_confirmation = value
+  end
+
   private
 
     def get_user
