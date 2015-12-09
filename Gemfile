@@ -27,7 +27,7 @@ gem 'font-awesome-rails'
 gem 'bootstrap_form'
 
 gem 'paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 gem 'rails_12factor', group: :production
 
 
