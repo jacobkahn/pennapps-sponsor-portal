@@ -1,5 +1,4 @@
 RailsAdmin.config do |config|
-
   ### Popular gems integration
 
   ## == Devise ==
@@ -20,8 +19,8 @@ RailsAdmin.config do |config|
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
   config.actions do
-    dashboard                     # mandatory
-    index                         # mandatory
+    dashboard
+    index
     toggle
     new
     export
@@ -36,41 +35,36 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  config.model 'User' do 
-    configure :set_password do
-      required true
-    end
+  config.model 'User' do
+    configure :put_password
 
     object_label_method do
       :custom_label_method
     end
     list do
       field :name
-      field :set_password do
-        required true
-      end
+      field :put_password
       field :logo_valid, :toggle
       field :payment_received, :toggle
       field :created_at do
         date_format :short
       end
       field :updated_at do
-        strftime_format "%Y-%m-%d"
+        strftime_format '%Y-%m-%d'
       end
-
     end
     exclude_fields :activated, :activated_at, :remember_digest, :password_digest
     exclude_fields :activation_digest, :reset_digest, :reset_sent_at
   end
 
   def custom_label_method
-    "#{self.email}"
+    "#{email}"
   end
 
   config.authorize_with do
     authenticate_or_request_with_http_basic('Login required') do |username, password|
       username == Rails.application.secrets.user &&
-      password == Rails.application.secrets.password
+        password == Rails.application.secrets.password
     end
   end
 end

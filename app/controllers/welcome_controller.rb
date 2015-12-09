@@ -1,7 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-  	if logged_in?
-  		redirect_to current_user
-  	end
+    redirect_to current_user if logged_in?
   end
 end

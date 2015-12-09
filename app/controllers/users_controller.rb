@@ -10,9 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    unless current_user == User.find(params[:id])
-      redirect_to current_user
-    end
+    redirect_to current_user unless current_user == User.find(params[:id])
   end
 
   # GET /users/new
@@ -31,7 +29,7 @@ class UsersController < ApplicationController
     @user.logo_valid = false
     if @user.save
       UserMailer.account_activation(@user).deliver_now
-      flash[:info] = "Please check your email to activate your account."
+      flash[:info] = 'Please check your email to activate your account.'
       redirect_to root_url
     else
       render :new
@@ -42,7 +40,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:info] = "Your information has been updated."
+      flash[:info] = 'Your information has been updated.'
       redirect_to @user
     else
       render 'edit'
@@ -58,28 +56,27 @@ class UsersController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation,
-                                   :primary_contact_name,
-                                   :primary_contact_email,
-                                   :logo)
-    end
+  def user_params
+    params.require(:user).permit(:name, :email, :password,
+                                 :password_confirmation,
+                                 :primary_contact_name,
+                                 :primary_contact_email,
+                                 :logo)
+  end
 
-    def logged_in_user
-      unless logged_in?
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+  def logged_in_user
+    return if logged_in?
+    flash[:danger] = 'Please log in.'
+    redirect_to login_url
+  end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 end

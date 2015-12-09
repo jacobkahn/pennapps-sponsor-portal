@@ -196,7 +196,7 @@
 
           <div id="#invoice" class="dashboard-component invoice" style="display: none">
             <h3>Invoice and W-9</h3>
-            <% if @user.invoice_link == nil %>
+            <% if @user.invoice_link == nil || @user.invoice_link.length == 0 %>
             <div class="alert alert-danger" role="alert">
               <strong>Your invoice isn't ready yet.</strong> We're working on it!
             </div>

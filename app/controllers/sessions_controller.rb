@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-
   def new
   end
 
@@ -11,8 +10,8 @@ class SessionsController < ApplicationController
       flash[:info] = 'Welcome back to the sponsor portal.'
       redirect_to user
     else
-	  flash[:danger] = 'Invalid email/password combination'
-      render 'new'    
+      flash[:danger] = 'Invalid email/password combination'
+      render 'new'
     end
   end
 

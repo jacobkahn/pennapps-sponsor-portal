@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record in production
@@ -30,7 +29,6 @@ gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 gem 'rails_12factor', group: :production
 
-
 gem 'faker', '1.4.2'
 
 # Use ActiveModel has_secure_password
@@ -38,12 +36,10 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rails_admin'
 gem 'rails_admin_toggleable'
-gem "twitter-bootstrap-rails"
-
+gem 'twitter-bootstrap-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -59,4 +55,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
