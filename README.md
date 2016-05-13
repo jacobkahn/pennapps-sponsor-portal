@@ -1,2 +1,2 @@
-# cis196finalproject
-Final Project for CIS 196
+# PennApps Sponsor Portal
+
